@@ -45,7 +45,7 @@
         if (event.key === "Enter") {
           locationInfo = event.target.value;
           if (locationInfo !== "") {
-            const url = `http://api.weatherapi.com/v1/current.json?key=58a78faf588840b980073552240808&q=${locationInfo}&aqi=yes`;
+            const url = `https://api.weatherapi.com/v1/current.json?key=58a78faf588840b980073552240808&q=${locationInfo}&aqi=yes`;
             fetch(url)
               .then((response) => response.json())
               .then((data) => {
