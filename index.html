@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="bg-blue-400 h-screen flex justify-center items-center">
+      <div class="bg-white w-[400px] rounded-lg">
+        <h1 class="font-semibold text-center py-2 text-xl">Weather</h1>
+        <div class="mx-4 my-3">
+          <label for="city" class="mr-4">Enter City </label>
+          <input
+            type="text"
+            id="city"
+            class="border-blue-200 border-2 outline-none rounded-sm p-1 text-sm"
+            placeholder="Enter Your City here.."
+          />
+        </div>
+        <div id="weatherInfo" class="flex flex-col items-center">
+          <div
+            id="detailsInfo"
+            class="flex flex-col items-center gap-[20px]"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const weatherInfo = document.getElementById("weatherInfo");
+
+      const inputEl = document.getElementById("city");
+      let locationInfo = "";
+
+      const img = document.createElement("img");
+      img.src = "";
+      weatherInfo.appendChild(img);
+      const localityName = document.createElement("p");
+      detailsInfo.appendChild(localityName);
+      const temp = document.createElement("p");
+      detailsInfo.appendChild(temp);
+      const text = document.createElement("p");
+      detailsInfo.appendChild(text);
+
+      inputEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          locationInfo = event.target.value;
+          if (locationInfo !== "") {
+            const url = `http://api.weatherapi.com/v1/current.json?key=58a78faf588840b980073552240808&q=${locationInfo}&aqi=yes`;
+            fetch(url)
+              .then((response) => response.json())
+              .then((data) => {
+                img.src = data.current.condition.icon;
+                text.textContent = data.current.condition.text;
+                text.style.fontWeight = "600";
+                const temperatureInCelsius = data.current.temp_c;
+                const locationDetails = data.location.name;
+                localityName.textContent = locationDetails;
+                temp.textContent = temperatureInCelsius + "°C";
+                temp.style.color = "red";
+              })
+              .catch((error) => console.log(error));
+            event.target.value = "";
+          } else {
+            alert("Enter Location");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
